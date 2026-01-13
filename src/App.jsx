@@ -1,22 +1,26 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
+import logo from "./assets/movie.svg"
+
+const key = import.meta.env.VITE_OMDB_KEY || "e5d9474c";
+
 const fetchMovies = async (search) => {
   if (!search) return null;
-  const res = await fetch(`https://www.omdbapi.com/?apikey=e5d9474c&s=${search}`);
+  const res = await fetch(`https://www.omdbapi.com/?apikey=${key}&s=${search}`);
   if (!res.ok) throw new Error("Error de conexión");
   return res.json();
 };
 
 const getMovieDetails = async (movie_id) => {
-  const response = await fetch(`https://www.omdbapi.com/?apikey=e5d9474c&i=${movie_id}`);
+  const response = await fetch(`https://www.omdbapi.com/?apikey=${key}&i=${movie_id}`);
   if (!response.ok) throw new Error("Error de conexión");
   return response.json();
 }
 
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("Python");
-  const [selectedMovieId, setSelectedMovieId] = useState(""); // Cambié el nombre para mayor claridad
+  const [selectedMovieId, setSelectedMovieId] = useState(""); 
 
   
   const { data, isLoading, isError } = useQuery({
@@ -58,13 +62,21 @@ export default function App() {
           <input
             type="text"
             className="form-control form-control-lg shadow-sm"
+            style={{width: '400px'}}
             placeholder="Escribe una película (mínimo 3 letras)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="col-md-6 m-2">
-          <button onClick={() => setSearchTerm("")} className="btn btn-outline-secondary shadow-sm mt-2 m-auto"><i className="bi bi-x-circle" ></i> Limpiar</button>
+        <div className="col-md-6">
+          <button
+            className="btn btn-primary btn-lg shadow-sm"
+            style={{marginLeft: '110px'}}
+            onClick={() => setSearchTerm("")}
+          >
+            Limpiar
+          </button>
+          
         </div>
       </div>
 
@@ -89,7 +101,7 @@ export default function App() {
       <div className="container-fluid min-h-screen bg-dark py-5">
         
         <div className="row g-4 px-4">
-          {data?.Search?.map((m) => (
+          {searchTerm.length >= 3 && searchTerm != "" ? (data?.Search?.map((m) => (
             <div key={m.imdbID} className="col-6 col-md-4 col-lg-3 animate-fade-in">
               <div className="card h-100 shadow border-0 movie-card bg-secondary text-white">
                 <img
@@ -101,6 +113,7 @@ export default function App() {
                 <div className="card-body text-center">
                   <h6 className="card-title text-truncate">{m.Title}</h6>
                   <span className="badge bg-primary rounded-pill">{m.Year}</span>
+                  <span className="badge bg-warning rounded-pill m-1">{m.Type}</span>
                 </div>
                 <div className="card-footer border-0 bg-dark pb-3">
                   <button
@@ -114,7 +127,19 @@ export default function App() {
                 </div>
               </div>
             </div>
-          ))}
+          ))) : (
+          <div className="col-12 text-center text-white">
+              <p className="lead">
+                Usa el buscador para encontrar tus películas favoritas.
+              </p>
+              <img
+                src={logo}
+                alt="Film Reel"
+                style={{ width: "150px", opacity: 0.5 }}
+                className="mt-3"
+              />
+            </div>
+          )}
         </div>
 
         
@@ -141,9 +166,21 @@ export default function App() {
                         <p><strong>Sinopsis:</strong> {movieDetails?.Plot}</p>
                         <p><strong>Director:</strong> {movieDetails?.Director}</p>
                         <p><strong>Actores:</strong> {movieDetails?.Actors}</p>
+                        {movieDetails.Type === "series" && (
+                          <>
+                            <p><strong>Temporadas:</strong> {movieDetails?.totalSeasons}</p>
+                          </>
+                        )}
+                        <div className="mt-3">
+                        </div>
                         <div className="mt-3">
                           <span className="badge bg-info text-dark me-2">{movieDetails?.Genre}</span>
-                          <span className="badge bg-outline-secondary">{movieDetails?.Runtime}</span>
+                          <span className="badge bg-info text-dark me-2">{movieDetails?.Runtime}</span>
+                        </div>
+                        <div className="mt-3">
+                          <span className="badge bg-info text-dark me-2">{movieDetails?.Released}</span>
+                          <span className="badge bg-info text-dark me-2">{movieDetails?.Type}</span>
+                          <span className="badge bg-info text-dark me-2">{movieDetails?.Country}</span>
                         </div>
                       </div>
                     </div>
