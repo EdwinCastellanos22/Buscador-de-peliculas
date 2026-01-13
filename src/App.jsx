@@ -166,7 +166,7 @@ export default function App() {
                         <p><strong>Sinopsis:</strong> {movieDetails?.Plot}</p>
                         <p><strong>Director:</strong> {movieDetails?.Director}</p>
                         <p><strong>Actores:</strong> {movieDetails?.Actors}</p>
-                        {movieDetails.Type === "series" && (
+                        {movieDetails?.Type === "series" && (
                           <>
                             <p><strong>Temporadas:</strong> {movieDetails?.totalSeasons}</p>
                           </>
