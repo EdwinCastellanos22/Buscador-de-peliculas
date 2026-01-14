@@ -63,8 +63,8 @@ Buscador de películas moderno que utiliza la API de **OMDb** para mostrar infor
 5. Detener Docker Compose
     ``` bash
    docker-compose down
-  ```
+    ```
 
 ---
-
 [Haz clic aquí para ver la Demo](https://searchmovies-ffbm.onrender.com/)
+---
