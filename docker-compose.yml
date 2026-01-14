@@ -1,0 +1,11 @@
+services:
+  movie-search:
+    build: 
+      context: .
+      args:
+        - VITE_TOKEN=${VITE_TOKEN}
+      dockerfile: Dockerfile
+    container_name: movieSearchContainer
+    ports:
+      - "8080:80"
+    restart: always

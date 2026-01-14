@@ -5,9 +5,9 @@ import logo from "./assets/movie.svg"
 
 const key = import.meta.env.VITE_TOKEN;
 
-const fetchMovies = async (search) => {
+const fetchMovies = async (search, tipe) => {
   if (!search) return null;
-  const res = await fetch(`https://www.omdbapi.com/?apikey=${key}&s=${search}`);
+  const res = await fetch(`https://www.omdbapi.com/?apikey=${key}&s=${search}&type=${tipe}`);
   if (!res.ok) throw new Error("Error de conexión");
   return res.json();
 };
@@ -20,16 +20,17 @@ const getMovieDetails = async (movie_id) => {
 
 export default function App() {
   const [searchTerm, setSearchTerm] = useState("Python");
-  const [selectedMovieId, setSelectedMovieId] = useState(""); 
+  const [selectedMovieId, setSelectedMovieId] = useState("");
+  const [tipe, seTipe] = useState("");
 
-  
+
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["movies", searchTerm],
-    queryFn: () => fetchMovies(searchTerm),
+    queryKey: ["movies", searchTerm, tipe],
+    queryFn: () => fetchMovies(searchTerm, tipe),
     enabled: searchTerm.length > 2,
   });
 
-  
+
   const { data: movieDetails, isLoading: isLoadingDetails } = useQuery({
     queryKey: ["movie", selectedMovieId],
     queryFn: () => getMovieDetails(selectedMovieId),
@@ -62,21 +63,33 @@ export default function App() {
           <input
             type="text"
             className="form-control form-control-lg shadow-sm"
-            style={{width: '400px', marginLeft: '110px'}}
+            style={{ width: '500px', marginLeft: '110px' }}
             placeholder="Escribe una película (mínimo 3 letras)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            role="search"
           />
+          <select
+            className="form-select form-control-lg shadow-sm"
+            style={{ width: '200px', marginLeft: '110px', marginTop: '10px' }}
+            onChange={(e) => seTipe(e.target.value)}
+          >
+            <option value="movie" selected>Película</option>
+            <option value="series">Serie</option>
+            <option value="episode">Episodio</option>
+          </select>
         </div>
         <div className="col-md-6">
           <button
-            className="btn btn-primary btn-lg shadow-sm"
-            style={{marginLeft: '140px'}}
-            onClick={() => setSearchTerm("")}
+            className="btn btn-outline-danger btn-lg shadow-sm"
+            style={{ marginTop: '60px' }}
+            onClick={() => {
+              setSearchTerm("");
+              seTipe("");
+            }}
           >
-            Limpiar
+            <i className="bi bi-trash me-2"></i> Limpiar búsqueda
           </button>
-          
         </div>
       </div>
 
@@ -99,7 +112,7 @@ export default function App() {
       )}
 
       <div className="container-fluid min-h-screen bg-dark py-5">
-        
+
         <div className="row g-4 px-4">
           {searchTerm.length >= 2 && searchTerm != "" ? (data?.Search?.map((m) => (
             <div key={m.imdbID} className="col-6 col-md-4 col-lg-3 animate-fade-in">
@@ -120,7 +133,7 @@ export default function App() {
                     className="btn btn-outline-success w-100 btn-sm"
                     data-bs-toggle="modal"
                     data-bs-target="#modalMovie"
-                    onClick={() => setSelectedMovieId(m.imdbID)} 
+                    onClick={() => setSelectedMovieId(m.imdbID)}
                   >
                     Ver detalles
                   </button>
@@ -128,12 +141,13 @@ export default function App() {
               </div>
             </div>
           ))) : (
-          <div className="col-12 text-center text-white">
+            <div className="col-12 text-center text-white">
               <p className="lead">
                 Usa el buscador para encontrar tus películas favoritas.
               </p>
               <img
                 src={logo}
+                fill="#fff"
                 alt="Film Reel"
                 style={{ width: "150px", opacity: 0.5 }}
                 className="mt-3"
@@ -142,7 +156,7 @@ export default function App() {
           )}
         </div>
 
-        
+
         <div className="modal fade" id="modalMovie" tabIndex="-1" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered modal-lg">
             <div className="modal-content bg-dark text-white border-secondary">
@@ -164,8 +178,8 @@ export default function App() {
                       <div className="col-md-8">
                         <p className="text-warning fw-bold">⭐ {movieDetails?.imdbRating}</p>
                         <p className="text-success fw-bold"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#46e416ff" viewBox="0 0 16 16">
-  <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11V10.937c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.51 5a2 2 0 1 0 .01 4 2 2 0 0 0-.01-4zm10 0a2 2 0 1 0 .01 4 2 2 0 0 0-.01-4z"/>
-</svg> {movieDetails?.Awards}</p>
+                          <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11V10.937c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.51 5a2 2 0 1 0 .01 4 2 2 0 0 0-.01-4zm10 0a2 2 0 1 0 .01 4 2 2 0 0 0-.01-4z" />
+                        </svg> {movieDetails?.Awards}</p>
                         <p><strong>Sinopsis:</strong> {movieDetails?.Plot}</p>
                         <p><strong>Director:</strong> {movieDetails?.Director}</p>
                         <p><strong>Actores:</strong> {movieDetails?.Actors}</p>
@@ -192,12 +206,20 @@ export default function App() {
                 </>
               )}
               <div className="modal-footer border-secondary">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                {/*<button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> */}
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {data?.Response === "False" && searchTerm.length > 2 && (
+        <div className="text-center my-5 animate-fade-in">
+          <div className="display-1 text-muted">🔍</div>
+          <h3 className="text-secondary mt-3">No hay resultados para tu búsqueda</h3>
+          <p className="text-muted text-center">Intenta con otro nombre o cambia el filtro de {tipe}.</p>
+        </div>
+      )}
 
     </div>
   );
