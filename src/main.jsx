@@ -5,7 +5,6 @@ import './index.css'
 import App from './App.jsx'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-// También importa el JS si vas a usar Modals o Dropdowns de Bootstrap
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const queryClient = new QueryClient()

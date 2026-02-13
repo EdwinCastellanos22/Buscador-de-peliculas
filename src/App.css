@@ -1,0 +1,608 @@
+/* ============================================
+   VARIABLES - ESTILO JUSTWATCH
+   ============================================ */
+:root {
+  /* Colores JustWatch */
+  --jw-yellow: #ffcd00;
+  --jw-yellow-hover: #ffd633;
+  --jw-black: #0e0e0e;
+  --jw-dark: #141414;
+  --jw-dark-light: #1a1a1a;
+  --jw-card-bg: #1c1c1c;
+  --jw-card-hover: #242424;
+  
+  /* Texto */
+  --jw-text-primary: #ffffff;
+  --jw-text-secondary: #b3b3b3;
+  --jw-text-muted: #808080;
+  
+  /* Bordes */
+  --jw-border: rgba(255, 255, 255, 0.08);
+  --jw-border-hover: rgba(255, 205, 0, 0.3);
+  
+  /* Sombras */
+  --jw-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --jw-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --jw-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+  
+  /* Espaciado */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  
+  /* Transiciones */
+  --transition: 0.2s ease-in-out;
+}
+
+/* ============================================
+   RESET Y BASE
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--jw-black);
+  color: var(--jw-text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   CONTENEDOR PRINCIPAL
+   ============================================ */
+.container-fluid {
+  background-color: var(--jw-dark);
+  padding: var(--spacing-xl) var(--spacing-md);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+header {
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg) 0;
+  border-bottom: 1px solid var(--jw-border);
+}
+
+header h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--jw-text-primary);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.5px;
+}
+
+header h1::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 28px;
+  background-color: var(--jw-yellow);
+  margin-right: var(--spacing-md);
+  vertical-align: middle;
+}
+
+header p {
+  color: var(--jw-text-secondary);
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin-left: 20px;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   BARRA DE BÚSQUEDA
+   ============================================ */
+label {
+  display: block;
+  font-size: 0.813rem;
+  font-weight: 600;
+  color: var(--jw-text-secondary);
+  margin-bottom: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-control,
+.form-select {
+  background-color: var(--jw-card-bg);
+  border: 1px solid var(--jw-border);
+  color: var(--jw-text-primary);
+  padding: 12px 16px;
+  font-size: 0.938rem;
+  border-radius: var(--radius-md);
+  transition: all var(--transition);
+  height: 48px;
+}
+
+.form-control::placeholder {
+  color: var(--jw-text-muted);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--jw-card-hover);
+  border-color: var(--jw-yellow);
+  box-shadow: 0 0 0 2px rgba(255, 205, 0, 0.1);
+  color: var(--jw-text-primary);
+  outline: none;
+}
+
+.form-select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23b3b3b3' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.form-select option {
+  background-color: var(--jw-card-bg);
+  color: var(--jw-text-primary);
+}
+
+/* ============================================
+   BOTONES
+   ============================================ */
+.btn {
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition);
+  cursor: pointer;
+  border: none;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  text-transform: none;
+  letter-spacing: 0.3px;
+}
+
+.btn-outline-danger {
+  background-color: transparent;
+  border: 1px solid var(--jw-border);
+  color: var(--jw-text-secondary);
+}
+
+.btn-outline-danger:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--jw-text-secondary);
+  color: var(--jw-text-primary);
+  transform: none;
+}
+
+.btn-success {
+  background-color: var(--jw-yellow);
+  color: var(--jw-black);
+  font-weight: 700;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: var(--jw-yellow-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 205, 0, 0.3);
+}
+
+/* ============================================
+   GRID DE PELÍCULAS
+   ============================================ */
+.row {
+  margin-left: calc(var(--spacing-md) * -0.5);
+  margin-right: calc(var(--spacing-md) * -0.5);
+}
+
+.row > [class*='col-'] {
+  padding-left: calc(var(--spacing-md) * 0.5);
+  padding-right: calc(var(--spacing-md) * 0.5);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ============================================
+   CARDS DE PELÍCULAS - ESTILO JUSTWATCH
+   ============================================ */
+.movie-card {
+  background-color: var(--jw-card-bg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition);
+  border: 1px solid transparent;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.movie-card::before {
+  display: none;
+}
+
+.movie-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--jw-shadow-lg);
+  border-color: var(--jw-border-hover);
+  background-color: var(--jw-card-hover);
+}
+
+.movie-card .card-img-top {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  background-color: var(--jw-dark-light);
+}
+
+.movie-card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+/* Overlay en hover */
+.movie-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 340px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+}
+
+.movie-card:hover::after {
+  opacity: 1;
+}
+
+.movie-card .card-body {
+  padding: var(--spacing-md);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+}
+
+.movie-card .card-title {
+  font-size: 0.938rem;
+  font-weight: 600;
+  color: var(--jw-text-primary);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 2.6em;
+}
+
+.movie-card .card-footer {
+  padding: 0 var(--spacing-md) var(--spacing-md);
+  background-color: transparent;
+  border: none;
+}
+
+/* ============================================
+   BADGES - ESTILO JUSTWATCH
+   ============================================ */
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: capitalize;
+}
+
+.badge.bg-primary {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: var(--jw-text-secondary) !important;
+}
+
+.badge.bg-warning {
+  background-color: var(--jw-yellow) !important;
+  color: var(--jw-black) !important;
+}
+
+.badge.bg-info {
+  background-color: rgba(255, 205, 0, 0.15) !important;
+  color: var(--jw-yellow) !important;
+}
+
+/* ============================================
+   LOADING
+   ============================================ */
+.spinner-border {
+  width: 40px;
+  height: 40px;
+  border-width: 3px;
+  border-color: var(--jw-yellow);
+  border-right-color: transparent;
+}
+
+.text-primary {
+  color: var(--jw-yellow) !important;
+}
+
+/* ============================================
+   MODAL - ESTILO JUSTWATCH
+   ============================================ */
+.modal-content {
+  background-color: var(--jw-dark);
+  border: 1px solid var(--jw-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--jw-shadow-lg);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--jw-border);
+  padding: var(--spacing-lg);
+  background-color: var(--jw-card-bg);
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--jw-text-primary);
+}
+
+.modal-body {
+  padding: var(--spacing-lg);
+  background-color: var(--jw-dark);
+}
+
+.modal-body img {
+  border-radius: var(--radius-md);
+  box-shadow: var(--jw-shadow-md);
+  border: 1px solid var(--jw-border);
+}
+
+.modal-body h5 {
+  color: var(--jw-yellow);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.modal-body p {
+  color: var(--jw-text-secondary);
+  font-size: 0.938rem;
+  line-height: 1.6;
+}
+
+.modal-body strong {
+  color: var(--jw-text-primary);
+  font-weight: 600;
+}
+
+.modal-body hr {
+  border-color: var(--jw-border);
+  opacity: 1;
+  margin: var(--spacing-md) 0;
+}
+
+.btn-close-white {
+  filter: brightness(0) invert(1);
+  opacity: 0.6;
+}
+
+.btn-close-white:hover {
+  opacity: 1;
+}
+
+/* ============================================
+   ESTADO VACÍO
+   ============================================ */
+.text-white-50 {
+  color: var(--jw-text-muted) !important;
+}
+
+/* ============================================
+   ALERT
+   ============================================ */
+.alert {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--jw-border);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: 0.938rem;
+}
+
+.alert-danger {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #ff6b6b;
+  border-color: rgba(220, 53, 69, 0.2);
+}
+
+/* ============================================
+   UTILIDADES
+   ============================================ */
+.shadow-sm {
+  box-shadow: var(--jw-shadow-sm) !important;
+}
+
+.text-secondary {
+  color: var(--jw-text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--jw-text-muted) !important;
+}
+
+.text-info {
+  color: var(--jw-yellow) !important;
+}
+
+.text-warning {
+  color: var(--jw-yellow) !important;
+}
+
+.bg-secondary {
+  background-color: var(--jw-card-bg) !important;
+}
+
+.bg-dark {
+  background-color: var(--jw-dark) !important;
+}
+
+.border-secondary {
+  border-color: var(--jw-border) !important;
+}
+
+/* ============================================
+   SCROLLBAR - ESTILO JUSTWATCH
+   ============================================ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--jw-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--jw-card-bg);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--jw-card-hover);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .container-fluid {
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+  }
+  
+  header h1::before {
+    height: 20px;
+    margin-right: var(--spacing-sm);
+  }
+  
+  .movie-card .card-img-top {
+    height: 300px;
+  }
+  
+  .modal-dialog {
+    margin: var(--spacing-sm);
+  }
+  
+  .modal-header,
+  .modal-body {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-card .card-img-top {
+    height: 280px;
+  }
+  
+  .form-control,
+  .form-select,
+  .btn {
+    height: 44px;
+    font-size: 0.875rem;
+  }
+  
+  header h1::before {
+    display: none;
+  }
+  
+  header p {
+    margin-left: 0;
+  }
+}
+
+/* ============================================
+   ACCESIBILIDAD
+   ============================================ */
+*:focus-visible {
+  outline: 2px solid var(--jw-yellow);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   MEJORAS VISUALES ADICIONALES
+   ============================================ */
+.card-body > div {
+  margin-top: auto;
+}
+
+.badge + .badge {
+  margin-left: 6px;
+}
+
+/* Hover en badges */
+.badge {
+  transition: all var(--transition);
+}
+
+.movie-card:hover .badge.bg-warning {
+  background-color: var(--jw-yellow-hover) !important;
+}
+
+/* Loading state mejorado */
+.spinner-border + p {
+  margin-top: var(--spacing-md);
+  color: var(--jw-text-secondary);
+  font-size: 0.938rem;
+}
