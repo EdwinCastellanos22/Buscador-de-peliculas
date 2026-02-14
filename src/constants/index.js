@@ -4,6 +4,14 @@ export const MOVIE_TYPES = {
   EPISODE: 'episode'
 };
 
+export const MOVIE_LANGUAGE_LABELS = {
+  'es': 'Español',
+  'en': 'Inglés',
+  'de': 'Alemán',
+  'fr': 'Francés',
+  'it': 'Italiano'
+};
+
 export const MOVIE_TYPE_LABELS = {
   [MOVIE_TYPES.MOVIE]: 'Película',
   [MOVIE_TYPES.SERIES]: 'Serie',

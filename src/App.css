@@ -97,6 +97,19 @@ header h1::before {
   height: 28px;
   background-color: var(--jw-yellow);
   margin-right: var(--spacing-md);
+  margin-top: 20px;
+  vertical-align: middle;
+}
+
+header h1::after {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  height: 28px;
+  background-color: var(--jw-yellow);
+  margin-right: var(--spacing-md);
   vertical-align: middle;
 }
 

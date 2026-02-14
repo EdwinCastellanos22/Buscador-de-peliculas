@@ -1,4 +1,13 @@
+import React from 'react';
+import { useTraduccion } from '../hooks/traductor';
+import { MOVIE_LANGUAGE_LABELS } from '../constants';
+
 export default function MovieDetails({ movie, isLoading }) {
+
+  const { resultado: plotEs, cargando: traduciendoPlot } = useTraduccion(movie?.Plot, 'es');
+  const { resultado: genreEs } = useTraduccion(movie?.Genre, 'es');
+  const { resultado: titleEs } = useTraduccion(movie?.Title, 'es');
+
   if (isLoading) {
     return (
       <div className="modal-body text-center p-5">
@@ -14,7 +23,7 @@ export default function MovieDetails({ movie, isLoading }) {
   return (
     <>
       <div className="modal-header border-secondary">
-        <h3 className="modal-title text-warning h5">{movie.Title}</h3>
+        <h3 className="modal-title text-warning h5">{titleEs}</h3>
         <button 
           type="button" 
           className="btn-close btn-close-white" 
@@ -27,9 +36,9 @@ export default function MovieDetails({ movie, isLoading }) {
         <div className="row g-4">
           <div className="col-12 col-md-4 text-center">
             <img 
-              src={movie.Poster} 
+              src={movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450?text=Sin+Poster'} 
               className="img-fluid rounded shadow" 
-              alt={`Poster de ${movie.Title}`}
+              alt={`Poster de ${titleEs}`}
             />
           </div>
           
@@ -43,7 +52,13 @@ export default function MovieDetails({ movie, isLoading }) {
             )}
             
             {movie.Plot && movie.Plot !== 'N/A' && (
-              <p className="text-white-50">{movie.Plot}</p>
+              <p className="text-white-50">
+                {traduciendoPlot ? (
+                  <span className="fst-italic opacity-50">Traduciendo sinopsis...</span>
+                ) : (
+                  plotEs
+                )}
+              </p>
             )}
             
             <hr className="border-secondary" />
@@ -64,7 +79,7 @@ export default function MovieDetails({ movie, isLoading }) {
             
             <div className="d-flex flex-wrap gap-2">
               {movie.Genre && movie.Genre !== 'N/A' && (
-                <span className="badge bg-info">{movie.Genre}</span>
+                <span className="badge bg-info">{genreEs}</span>
               )}
               {movie.Runtime && movie.Runtime !== 'N/A' && (
                 <span className="badge bg-primary">{movie.Runtime}</span>

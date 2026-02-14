@@ -1,4 +1,4 @@
-import { MOVIE_TYPES, MOVIE_TYPE_LABELS } from '../constants';
+import { MOVIE_TYPES, MOVIE_TYPE_LABELS, MOVIE_LANGUAGE_LABELS } from '../constants';
 
 export default function SearchBar({ 
   searchTerm, 
@@ -10,7 +10,7 @@ export default function SearchBar({
 }) {
   return (
     <div className="container mb-4">
-      <div className="row g-3 align-items-end">
+      <div className="row g-2 align-items-end">
         <div className="col-12 col-md-6 col-lg-6">
           <label htmlFor="search-input">
             Buscar
